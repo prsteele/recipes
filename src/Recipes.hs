@@ -5,8 +5,6 @@ module Recipes where
 
 import Data.Aeson
 import Data.Aeson.Types
-import Data.Either
-import GHC.Generics
 import qualified Data.Text as T
 
 -- | An amount and a unit name.
@@ -42,7 +40,7 @@ instance FromJSON Ingredient where
         (Just _, Just _)  -> fail "Cannot specify an ingredient and a recipe"
         (Just x, Nothing) -> return $ Ingredient (Left x)  quantity
         (Nothing, Just x) -> return $ Ingredient (Right x) quantity
-        otherwise         -> fail "Must specify either \"ingredient\" or \"recipe\""
+        _                 -> fail "Must specify either \"ingredient\" or \"recipe\""
   parseJSON x = typeMismatch "ingredient" x
 
 instance ToJSON Ingredient where
@@ -65,6 +63,7 @@ data Recipe = Recipe
 
 instance FromJSON Recipe where
   parseJSON (Object v) = Recipe <$> v .: "name" <*> v .: "ingredients" <*> v .: "instructions"
+  parseJSON x          = typeMismatch "recipe" x
 
 instance ToJSON Recipe where
   toJSON (Recipe name ingredients instructions) =

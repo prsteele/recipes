@@ -1,4 +1,5 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
+{-# OPTIONS_GHC -fno-warn-orphans #-} -- Allow QuickCheck Arbitrary instances
 {-# LANGUAGE OverloadedStrings #-}
 module Recipes_Test where
 
