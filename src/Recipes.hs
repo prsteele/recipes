@@ -43,6 +43,16 @@ instance FromJSON Ingredient where
         otherwise         -> fail "Must specify either \"ingredient\" or \"recipe\""
   parseJSON x = typeMismatch "ingredient" x
 
+instance ToJSON Ingredient where
+  toJSON (Ingredient (Left ingredient) quantity) =
+    object [ "ingredient" .= ingredient
+           , "quantity" .= quantity
+           ]
+  toJSON (Ingredient (Right recipe) quantity) =
+    object [ "recipe" .= recipe
+           , "quantity" .= quantity
+           ]
+
 -- | A list of ingredients, along with text instructions.
 data Recipe = Recipe
               { _recipeName :: T.Text
@@ -53,3 +63,11 @@ data Recipe = Recipe
 
 instance FromJSON Recipe where
   parseJSON (Object v) = Recipe <$> v .: "name" <*> v .: "ingredients" <*> v .: "instructions"
+
+instance ToJSON Recipe where
+  toJSON (Recipe name ingredients instructions) =
+    object [ "name" .= name
+           , "ingredients" .= ingredients
+           , "instructions" .= instructions
+           ]
+    
