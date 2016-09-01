@@ -1,4 +1,3 @@
-{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 module Recipes where
 
@@ -18,6 +17,11 @@ data Quantity = Quantity
 instance FromJSON Quantity where
   parseJSON (Object v) = Quantity <$> v .: "name" <*> v .: "amount"
   parseJSON x          = typeMismatch "quantity" x
+
+instance ToJSON Quantity where
+  toJSON (Quantity name amount) = object [ "name" .= name
+                                         , "amount" .= amount
+                                         ]
 
 -- | Either the name of an ingredient or a recipe, along with a
 -- quantity
