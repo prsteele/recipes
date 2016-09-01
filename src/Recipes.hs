@@ -1,4 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
+-- | We provide basic data types to represent recipes that can be
+-- serialized to and deserialized from JSON.
 module Recipes where
 
 import Data.Aeson
