@@ -10,7 +10,7 @@ import Recipes
 import Data.Aeson
 
 instance Arbitrary Quantity where
-  arbitrary = Quantity <$> arbitrary <*> arbitrary
+  arbitrary = Quantity <$> arbitrary <*> arbitrary <*> pure Nothing
 
 instance Arbitrary Ingredient where
   arbitrary = do
@@ -36,7 +36,7 @@ instance Arbitrary Recipe where
     name    <- arbitrary
     nonRecs <- listOf arbitrary
     instr   <- arbitrary
-    return (Recipe name (map getIngredient nonRecs) instr)
+    return (Recipe name (map getIngredient nonRecs) instr Nothing)
 
 prop_quantityToFrom :: Quantity -> Bool
 prop_quantityToFrom q = case decode (encode q) of
