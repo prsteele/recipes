@@ -1,6 +1,6 @@
 module Main where
 
-import Types ()
+import Recipes.Types ()
 
 main :: IO ()
 main = return ()

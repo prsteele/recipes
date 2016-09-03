@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
-module Types where
+module Recipes.Types where
 
 import Control.Lens hiding ((.=))
 import Data.Aeson

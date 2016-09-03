@@ -1,13 +1,13 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-} -- Allow QuickCheck Arbitrary instances
 {-# LANGUAGE OverloadedStrings #-}
-module Types_Test where
+module Recipes.Types_Test where
 
 import Test.Framework
 import qualified Data.Text as T
 import Data.Aeson
 
-import Types
+import Recipes.Types
 
 instance Arbitrary Recipe where
   arbitrary = do
