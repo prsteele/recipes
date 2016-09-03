@@ -19,11 +19,12 @@ A table containing all recipes.
 
 ### Fields
 
-| Field name | Type      | Constraints                            |
-| ---------- | --------- | -------------------------------------- |
-| Id         | BIGSERIAL | Primary Key                            |
-| Name       | TEXT      | NOT NULL                               |
-| Components | BIGINT[]  | NOT NULL ELEMENT REFERENCES Components |
+| Field name   | Type      | Constraints                            |
+| ------------ | --------- | -------------------------------------- |
+| Id           | BIGSERIAL | Primary Key                            |
+| Name         | TEXT      | NOT NULL                               |
+| Components   | BIGINT[]  | NOT NULL ELEMENT REFERENCES Components |
+| Instructions | TEXT      | NOT NULL                               |
 
 ## Components
 

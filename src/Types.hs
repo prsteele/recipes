@@ -6,6 +6,7 @@ import Control.Lens hiding ((.=))
 import Data.Aeson
 import Data.Aeson.Types
 import qualified Data.Text as T
+--import Database.PostgreSQL.Simple
 
 -- | A Recipe consisting of a name, a number of components, and
 -- instructions.
