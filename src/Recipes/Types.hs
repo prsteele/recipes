@@ -6,7 +6,7 @@ import Control.Lens hiding ((.=))
 import Data.Aeson
 import Data.Aeson.Types
 import qualified Data.Text as T
---import Database.PostgreSQL.Simple
+import Database.PostgreSQL.Simple.FromRow
 
 -- | A Recipe consisting of a name, a number of components, and
 -- instructions.
@@ -79,6 +79,9 @@ instance ToJSON Ingredient where
                                                ]
   toJSON (Ingredient name Nothing)    = object [ "name" .= name
                                                ]
+
+instance FromRow Ingredient where
+  fromRow = Ingredient <$> field <*> field
 
 -- | Either an Ingredient or a Recipe, along with a quantity.
 data Component = IngredientComponent

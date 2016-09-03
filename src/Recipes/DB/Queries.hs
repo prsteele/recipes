@@ -4,15 +4,15 @@ module Recipes.DB.Queries where
 
 import Database.PostgreSQL.Simple
 
-createIngredientsQuery :: Query
-createIngredientsQuery =
+createIngredients :: Query
+createIngredients =
   "CREATE TABLE IF NOT EXISTS Ingredients (\
   \IngredientId  BIGSERIAL PRIMARY KEY,\
   \Name          TEXT NOT NULL\
   \)"
 
-createRecipesQuery :: Query
-createRecipesQuery =
+createRecipes :: Query
+createRecipes =
   "CREATE TABLE IF NOT EXISTS Recipes (\
   \RecipeId      BIGSERIAL PRIMARY KEY,\
   \Name          TEXT NOT NULL,\
@@ -20,8 +20,8 @@ createRecipesQuery =
   \Instructions  TEXT NOT NULL\
   \)"
 
-createComponentsQuery :: Query
-createComponentsQuery =
+createComponents :: Query
+createComponents =
   "CREATE TABLE IF NOT EXISTS Components (\
   \ComponentId   BIGSERIAL PRIMARY KEY,\
   \IsIngredient  BOOLEAN NOT NULL,\
@@ -30,3 +30,20 @@ createComponentsQuery =
   \Quantity      DOUBLE PRECISION NOT NULL,\
   \Unit          TEXT\
   \)"
+
+insertIngredient :: Query
+insertIngredient =
+  "INSERT INTO Ingredients (\
+  \Name\
+  \) VALUES (\
+  \?\
+  \)\
+  \RETURNING IngredientId"
+
+readIngredient :: Query
+readIngredient =
+  "SELECT \
+  \Name,\
+  \IngredientId \
+  \FROM Ingredients \
+  \WHERE IngredientId = ?"
