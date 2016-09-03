@@ -5,6 +5,7 @@ module Main where
 import Test.Framework
 
 import {-@ HTF_TESTS @-} Recipes.Types_Test
+import {-@ HTF_TESTS @-} Recipes.DB_Test
 
 main :: IO ()
-main = htfMain htf_importedTests
+main = setup >> htfMain htf_importedTests

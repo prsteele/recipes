@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import Data.ByteString as B
+import qualified Data.ByteString as B
 import Database.PostgreSQL.Simple
 
 import Recipes.DB
