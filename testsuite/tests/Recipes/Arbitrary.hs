@@ -1,4 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-} -- Allow QuickCheck Arbitrary instances
+-- | We provide Arbitrary instances for the data structures in
+-- Recipes.Types. We don't provide database IDs since a randomly
+-- generated ID is unlikely to be the database (which starts empty
+-- anyway).
 module Recipes.Arbitrary where
 
 import qualified Data.Text as T

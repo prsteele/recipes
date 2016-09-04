@@ -47,3 +47,29 @@ readIngredient =
   \IngredientId \
   \FROM Ingredients \
   \WHERE IngredientId = ?"
+
+insertIngredientComponent :: Query
+insertIngredientComponent =
+  "INSERT INTO Components (\
+  \IsIngredient,\
+  \Ingredient,\
+  \Recipe,\
+  \Quantity,\
+  \Unit\
+  \) VALUES (\
+  \TRUE, ?, NULL, ?, ?\
+  \)\
+  \RETURNING ComponentId"
+
+insertRecipeComponent :: Query
+insertRecipeComponent =
+  "INSERT INTO Components (\
+  \IsIngredient,\
+  \Ingredient,\
+  \Recipe,\
+  \Quantity,\
+  \Unit\
+  \) VALUES (\
+  \FALSE, NULL, ?, ?, ?\
+  \)\
+  \RETURNING ComponentId"

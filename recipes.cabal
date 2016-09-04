@@ -39,7 +39,7 @@ executable create-tables
                      , mtl >= 2.2.1
   hs-source-dirs:      src
   default-language:    Haskell2010
-  GHC-Options:         -Wall -Werror
+  GHC-Options:         -Wall -Werror -fforce-recomp -fsimpl-tick-factor=110
   
 test-suite TestMain
   hs-source-dirs:     testsuite/tests/, src/

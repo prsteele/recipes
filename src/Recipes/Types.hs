@@ -132,7 +132,20 @@ instance ToJSON Component where
            , "quantity" .= quantity
            ]
 
+-- | The concrete database IDs of a Component.
+--
+-- This should be constructed by a call to insertComponent.
+data ComponentIds = IngredientComponentIds
+                    { _componentIdsComponentId  :: Integer
+                    , _componentIdsIngredientId :: Integer
+                    }
+                  | RecipeComponentIds
+                    { _componentIdsComponentId :: Integer
+                    , _componentIdsRecipeId    :: Integer
+                    }
+
 makeLenses ''Quantity
 makeLenses ''Ingredient
 makeLenses ''Recipe
 makeLenses ''Component
+makeLenses ''ComponentIds

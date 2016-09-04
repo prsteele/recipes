@@ -8,10 +8,10 @@ A table containing all known raw ingredients.
 
 ### Fields
 
-| Field name | Type      | Constraints |
-| ---------- | --------- | ----------- |
-| Id         | BIGSERIAL | Primary Key |
-| Name       | TEXT      | NOT NULL    |
+| Field name   | Type      | Constraints |
+| ------------ | --------- | ----------- |
+| IngredientId | BIGSERIAL | Primary Key |
+| Name         | TEXT      | NOT NULL    |
 
 ## Recipes
 
@@ -21,7 +21,7 @@ A table containing all recipes.
 
 | Field name   | Type      | Constraints                            |
 | ------------ | --------- | -------------------------------------- |
-| Id           | BIGSERIAL | Primary Key                            |
+| RecipeId     | BIGSERIAL | Primary Key                            |
 | Name         | TEXT      | NOT NULL                               |
 | Components   | BIGINT[]  | NOT NULL ELEMENT REFERENCES Components |
 | Instructions | TEXT      | NOT NULL                               |
@@ -35,7 +35,7 @@ ingredient or a recipe.
 
 | Field name   | Type             | Constraints |
 | ------------ | ---------------- | ----------- |
-| Id           | BIGSERIAL        | PRIMARY KEY |
+| ComponentId  | BIGSERIAL        | PRIMARY KEY |
 | IsIngredient | Boolean          | NOT NULL    |
 | Ingredient   | BIGINT           |             |
 | Recipe       | BIGINT           |             |
