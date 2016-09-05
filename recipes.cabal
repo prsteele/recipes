@@ -27,7 +27,7 @@ executable recipes
                      , vector >= 0.11.0
   hs-source-dirs:      src
   default-language:    Haskell2010
-  GHC-Options:         -Wall -Werror
+  GHC-Options:         -Wall -Werror -fforce-recomp
 
 executable create-tables
   main-is:             CreateTables.hs
@@ -41,7 +41,7 @@ executable create-tables
                      , vector >= 0.11.0
   hs-source-dirs:      src
   default-language:    Haskell2010
-  GHC-Options:         -Wall -Werror -fforce-recomp -fsimpl-tick-factor=150
+  GHC-Options:         -Wall -Werror -fforce-recomp
   
 test-suite TestMain
   hs-source-dirs:     testsuite/tests/, src/
@@ -58,4 +58,4 @@ test-suite TestMain
                     , mtl >= 2.2.1
                     , vector >= 0.11.0
   default-language:   Haskell2010
-  GHC-Options:        -Wall -Werror -fsimpl-tick-factor=150
+  GHC-Options:        -Wall -Werror -fforce-recomp
