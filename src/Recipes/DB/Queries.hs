@@ -23,12 +23,11 @@ createRecipes =
 createComponents :: Query
 createComponents =
   "CREATE TABLE IF NOT EXISTS Components (\
-  \ComponentId   BIGSERIAL PRIMARY KEY,\
-  \IsIngredient  BOOLEAN NOT NULL,\
-  \Ingredient    BIGINT REFERENCES Ingredients (IngredientId),\
-  \Recipe        BIGINT REFERENCES Recipes (RecipeId),\
-  \Quantity      DOUBLE PRECISION NOT NULL,\
-  \Unit          TEXT\
+  \ComponentId         BIGSERIAL PRIMARY KEY,\
+  \IsIngredient        BOOLEAN NOT NULL,\
+  \IngredientOrRecipe  BIGINT,\
+  \Quantity            DOUBLE PRECISION NOT NULL,\
+  \Unit                TEXT\
   \)"
 
 insertIngredient :: Query
@@ -52,12 +51,11 @@ insertIngredientComponent :: Query
 insertIngredientComponent =
   "INSERT INTO Components (\
   \IsIngredient,\
-  \Ingredient,\
-  \Recipe,\
+  \IngredientOrRecipe,\
   \Quantity,\
   \Unit\
   \) VALUES (\
-  \TRUE, ?, NULL, ?, ?\
+  \TRUE, ?, ?, ?\
   \)\
   \RETURNING ComponentId"
 
@@ -65,11 +63,40 @@ insertRecipeComponent :: Query
 insertRecipeComponent =
   "INSERT INTO Components (\
   \IsIngredient,\
-  \Ingredient,\
-  \Recipe,\
+  \IngredientOrRecipe,\
   \Quantity,\
   \Unit\
   \) VALUES (\
-  \FALSE, NULL, ?, ?, ?\
+  \FALSE, ?, ?, ?\
   \)\
   \RETURNING ComponentId"
+
+readComponentDescriptor :: Query
+readComponentDescriptor =
+  "SELECT \
+  \IsIngredient,\
+  \IngredientOrRecipe,\
+  \Quantity,\
+  \Unit \
+  \FROM Components \
+  \WHERE ComponentId = ?"
+
+insertRecipe :: Query
+insertRecipe =
+  "INSERT INTO Recipes (\
+  \Name,\
+  \Components,\
+  \Instructions\
+  \) VALUES (\
+  \?, ?, ?\
+  \)\
+  \RETURNING RecipeId"
+
+readRecipeDescriptor :: Query
+readRecipeDescriptor =
+  "SELECT \
+  \Name,\
+  \Components,\
+  \Instructions \
+  \FROM Recipes \
+  \WHERE RecipeId = ?"

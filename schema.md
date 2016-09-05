@@ -33,11 +33,10 @@ ingredient or a recipe.
 
 ### Fields
 
-| Field name   | Type             | Constraints |
-| ------------ | ---------------- | ----------- |
-| ComponentId  | BIGSERIAL        | PRIMARY KEY |
-| IsIngredient | Boolean          | NOT NULL    |
-| Ingredient   | BIGINT           |             |
-| Recipe       | BIGINT           |             |
-| Quantity     | DOUBLE PRECISION | NOT NULL    |
-| Unit         | TEXT             |             |
+| Field name         | Type             | Constraints |
+| ------------------ | ---------------- | ----------- |
+| ComponentId        | BIGSERIAL        | PRIMARY KEY |
+| IsIngredient       | Boolean          | NOT NULL    |
+| IngredientOrRecipe | BIGINT           |             |
+| Quantity           | DOUBLE PRECISION | NOT NULL    |
+| Unit               | TEXT             |             |

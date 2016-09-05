@@ -1,20 +1,58 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveGeneric #-}
 module Recipes.Types where
 
 import Control.Lens hiding ((.=))
 import Data.Aeson
 import Data.Aeson.Types
 import qualified Data.Text as T
+import qualified Data.Vector as V
+import Database.PostgreSQL.Simple.FromField (FromField (..))
 import Database.PostgreSQL.Simple.FromRow
+import Database.PostgreSQL.Simple.ToField
+import GHC.Generics
+
+-- | The type for Recipe IDs in the database.
+newtype RecipeId = RecipeId Integer
+                 deriving (Show, Ord, Eq, Generic)
+
+instance FromJSON RecipeId
+instance ToJSON RecipeId
+instance FromField RecipeId where
+  fromField f mb = RecipeId <$> fromField f mb
+instance ToField RecipeId where
+   toField (RecipeId rid) = toField rid
+
+-- | The type for Component IDs in the database.
+newtype ComponentId = ComponentId Integer
+                    deriving (Show, Ord, Eq, Generic)
+
+instance FromJSON ComponentId
+instance ToJSON ComponentId
+instance FromField ComponentId where
+  fromField f mb = ComponentId <$> fromField f mb
+instance ToField ComponentId where
+  toField (ComponentId cid) = toField cid
+
+-- | The type for Ingredient IDs in the database.
+newtype IngredientId = IngredientId Integer
+                     deriving (Show, Ord, Eq, Generic)
+
+instance FromJSON IngredientId
+instance ToJSON IngredientId
+instance FromField IngredientId where
+  fromField f mb = IngredientId <$> fromField f mb
+instance ToField IngredientId where
+  toField (IngredientId iid) = toField iid
 
 -- | A Recipe consisting of a name, a number of components, and
 -- instructions.
 data Recipe = Recipe
               { _recipeName         :: T.Text
-              , _recipeComponents   :: [Component]
+              , _recipeComponents   :: V.Vector Component
               , _recipeInstructions :: T.Text
-              , _recipeId           :: Maybe Integer
+              , _recipeId           :: Maybe RecipeId
               }
             deriving (Show, Ord, Eq)
 
@@ -62,7 +100,7 @@ instance ToJSON Quantity where
 -- | The name of a basic ingredient.
 data Ingredient = Ingredient
                   { _ingredientName :: T.Text
-                  , _ingredientId   :: Maybe Integer
+                  , _ingredientId   :: Maybe IngredientId
                   }
                 deriving (Show, Ord, Eq)
 
@@ -81,18 +119,18 @@ instance ToJSON Ingredient where
                                                ]
 
 instance FromRow Ingredient where
-  fromRow = Ingredient <$> field <*> field
+  fromRow = Ingredient <$> field <*> fmap (Just . IngredientId) field
 
 -- | Either an Ingredient or a Recipe, along with a quantity.
 data Component = IngredientComponent
                  { _componentQuantity   :: Quantity
                  , _componentIngredient :: Ingredient
-                 , _componentId         :: Maybe Integer
+                 , _componentId         :: Maybe ComponentId
                  }
                | RecipeComponent
                  { _componentQuantity :: Quantity
                  , _componentRecipe   :: Recipe
-                 , _componentId       :: Maybe Integer
+                 , _componentId       :: Maybe ComponentId
                  }
                deriving (Show, Ord, Eq)
 

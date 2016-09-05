@@ -5,6 +5,7 @@
 -- anyway).
 module Recipes.Arbitrary where
 
+import qualified Data.Vector as V
 import qualified Data.Text as T
 import Test.Framework
 
@@ -15,7 +16,7 @@ instance Arbitrary Recipe where
     name    <- arbitrary
     nonRecs <- listOf arbitrary
     instr   <- arbitrary
-    return (Recipe name (map getComponent nonRecs) instr Nothing)
+    return (Recipe name (V.fromList (map getComponent nonRecs)) instr Nothing)
 
 instance Arbitrary Quantity where
   arbitrary = Quantity <$> arbitrary <*> arbitrary
@@ -37,8 +38,7 @@ instance Arbitrary NonRecursiveComponent where
   arbitrary = do
     ingredient <- arbitrary
     quantity   <- arbitrary
-    _id        <- arbitrary
-    return (NonRecursiveComponent (IngredientComponent quantity ingredient _id))
+    return (NonRecursiveComponent (IngredientComponent quantity ingredient Nothing))
 
 instance Arbitrary T.Text where
   arbitrary = T.pack . filter (/= '\0') <$> arbitrary
